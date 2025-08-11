@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+
+<!-- Audio Player Component -->
+<div class="media-component">
+    <button id="audioBtn" onclick="playAudio()">🎵 Play Audio</button>
+    <audio id="audioPlayer" preload="none">
+        <source src="https://www.soundjay.com/misc/sounds/bell-ringing-05.wav" type="audio/wav">
+    </audio>
+    <div class="rating">
+        <span onclick="rate('audio', 1)">⭐</span>
+        <span onclick="rate('audio', 2)">⭐</span>
+        <span onclick="rate('audio', 3)">⭐</span>
+        <span onclick="rate('audio', 4)">⭐</span>
+        <span onclick="rate('audio', 5)">⭐</span>
+        <span id="audioRating">Rate Audio</span>
+    </div>
+</div>
+
+<!-- Video Player Component -->
+<div class="media-component">
+    <button id="videoBtn" onclick="toggleVideo()">🎬 Play Video</button>
+    <video id="videoPlayer" style="display:none" width="400" height="300">
+        <source src="20240214_182723.mp4" type="video/mp4">
+    </video>
+    <div class="rating">
+        <span onclick="rate('video', 1)">⭐</span>
+        <span onclick="rate('video', 2)">⭐</span>
+        <span onclick="rate('video', 3)">⭐</span>
+        <span onclick="rate('video', 4)">⭐</span>
+        <span onclick="rate('video', 5)">⭐</span>
+        <span id="videoRating">Rate Video</span>
+    </div>
+</div>
+
+<style>
+    .media-component {
+        margin: 20px 0;
+    }
+
+    button {
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+    }
+
+    .rating {
+        margin-top: 10px;
+    }
+
+    .rating span {
+        cursor: pointer;
+        font-size: 20px;
+    }
+
+    .rating span:hover {
+        opacity: 0.7;
+    }
+</style>
+
+<script>
+    function playAudio() {
+        const audio = document.getElementById('audioPlayer');
+        const btn = document.getElementById('audioBtn');
+        if (audio.paused) {
+            audio.play();
+            btn.textContent = '⏸️ Pause Audio';
+        } else {
+            audio.pause();
+            btn.textContent = '🎵 Play Audio';
+        }
+    }
+
+    function toggleVideo() {
+        const video = document.getElementById('videoPlayer');
+        const btn = document.getElementById('videoBtn');
+        if (video.style.display === 'none') {
+            video.style.display = 'block';
+            video.play();
+            btn.textContent = '❌ Hide Video';
+        } else {
+            video.style.display = 'none';
+            video.pause();
+            btn.textContent = '🎬 Play Video';
+        }
+    }
+
+    function rate(type, stars) {
+        const ratingEl = document.getElementById(type + 'Rating');
+        ratingEl.textContent = '★'.repeat(stars) + '☆'.repeat(5 - stars);
+
+        // Highlight selected stars
+        const component = ratingEl.parentElement;
+        const starEls = component.querySelectorAll('span:not(:last-child)');
+        starEls.forEach((star, i) => {
+            star.style.opacity = i < stars ? '1' : '0.3';
+        });
+    }
+</script>
+
+    
+</body>
+</html>
